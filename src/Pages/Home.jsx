@@ -18,9 +18,8 @@ if (!products) return console.log(null)
 
 <>
 
-<div className='m-44'>
+<div className='m-44 flex px-4 justify-between'>
 
-<h2 className=''>Home</h2>
 {
   products.map((product,idx)=>{
     return <Card  {...product} />
