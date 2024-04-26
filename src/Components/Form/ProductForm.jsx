@@ -51,7 +51,8 @@ export default function ProductForm() {
                   <div className="flex text-sm text-gray-600">
                     <label htmlFor="file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                       <span className="">Upload a file</span>
-                      <input name="file-upload" type="file" className="sr-only" accept="image/*"  />
+                      <input id="file-upload" name="file-upload" type="file" className="sr-only" onChange={(e) => { const file = e.target.files[0]; setValue("ProductIMG", file);  }}/>
+
                       {errors.ProductIMG && <span>required</span>}
 
                     </label>
