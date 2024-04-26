@@ -1,7 +1,6 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { addProduct } from '../../Services/ProductServices';
-import { storage } from '../../Config/firebaseConfig';
 export default function ProductForm() {
     const {
         register,
@@ -14,13 +13,13 @@ export default function ProductForm() {
       
        addProduct(data)
       console.log(data)
-      // reset()
+      reset()
       alert('Product added successfully')
     }
     
   return (
 <>
-        <section className="max-w-4xl p-6 mx-auto bg-black rounded-lg shadow-md dark:bg-gray-800 mt-20">
+        <section className="my-20 max-w-4xl p-6 mx-auto bg-black rounded-lg shadow-md dark:bg-gray-800 ">
         <h1 className="text-xl font-bold text-white capitalize dark:text-white text-center">Add Products</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
