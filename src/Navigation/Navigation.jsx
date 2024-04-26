@@ -13,9 +13,6 @@ const router = createBrowserRouter(
       <Route path='/AddProduct' element={<AddProduct />} />
       <Route path='/description/:id' element={<ProductDescription />} />
       
-
-
-
     </Route>
     )
 )

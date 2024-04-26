@@ -1,7 +1,7 @@
 import {collection, getDocs, addDoc,setDoc} from "firebase/firestore";
 import { db } from "../Config/firebaseConfig";
-import 'firebase/storage';
-
+import { storage } from "../Config/firebaseConfig";
+import {ref,uploadBytes,getDownloadURL} from 'firebase/storage';
 
 export const getAllProducts = async () => {
     try {
@@ -20,31 +20,29 @@ export const getAllProducts = async () => {
         console.error('Error getting documents: ', error);
     }
 };
-        
+
+
 export const addProduct = async (data) => { 
-    // const file = data.ProductIMG[0]; // Get the uploaded file
-    // const storageRef = firebase.storage().ref();
-    // const fileRef = storageRef.child(file.name);
-
-    // try {
-    //   // Upload the file to Firebase Storage
-    //   const snapshot = await fileRef.put(file);
-    //   const imageUrl = await snapshot.ref.getDownloadURL();
-    //    imageUrl = productIMG}
-    //   catch (error) {
-    //     console.error('Error adding product:', error);
-    //   }
-
+    const file = data.ProductIMG[0]; // Get the uploaded file
+    
     try {
+        const storageRef = ref(storage, `productImages/${file.name}`);
+        const snapshot = await uploadBytes(storageRef, file);
+        const imageUrl = await getDownloadURL(snapshot.ref);
+        console.log("Image URL:", imageUrl);
 
-        const docRef = await addDoc(collection(db, "Products"),{
-         ...data
-        } );
+        // Add product data to Firestore
+        const docRef = await addDoc(collection(db, "Products"), {
+            ProductIMG: imageUrl,
+            Name: data.Name,
+            Price: data.Price,
+            Qty: data.Qty,
+            Description: data.Description
+        });
         console.log("Document written with ID: ", docRef.id);
     } catch (error) {
         console.error("Error adding document: ", error);
     }
 };
-
 
 

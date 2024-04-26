@@ -1,6 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { addProduct } from '../../Services/ProductServices';
+import { storage } from '../../Config/firebaseConfig';
 export default function ProductForm() {
     const {
         register,
@@ -10,9 +11,10 @@ export default function ProductForm() {
     } = useForm();
     
     const onSubmit = async (data) => {
-      await addProduct(data)
+      
+       addProduct(data)
       console.log(data)
-      reset()
+      // reset()
       alert('Product added successfully')
     }
     
@@ -51,7 +53,15 @@ export default function ProductForm() {
                   <div className="flex text-sm text-gray-600">
                     <label htmlFor="file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                       <span className="">Upload a file</span>
-                      <input id="file-upload" name="file-upload" type="file" className="sr-only" onChange={(e) => { const file = e.target.files[0]; setValue("ProductIMG", file);  }}/>
+                      <input
+    id="file-upload"
+    name="file-upload"
+    type='file'
+    className="sr-only"
+    accept="image/*"
+   
+    {...register("ProductIMG", { required: true })}
+/>
 
                       {errors.ProductIMG && <span>required</span>}
 
