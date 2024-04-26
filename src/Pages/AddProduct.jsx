@@ -1,9 +1,23 @@
+import { useForm } from 'react-hook-form'
 export default function AddProduct() {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+} = useForm();
+
+const onSubmit = async (data) => {
+  const addProductResponse = await addProduct(data)
+  reset()
+  alert('Product added successfully')
+}
+
   return (
     <>
       <section className="max-w-4xl p-6 mx-auto bg-black rounded-lg shadow-md dark:bg-gray-800 mt-20">
         <h1 className="text-xl font-bold text-white capitalize dark:text-white text-center">Add Products</h1>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
             <div>
               <label className="text-white dark:text-gray-200">Product Name</label>

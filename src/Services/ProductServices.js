@@ -1,4 +1,4 @@
-import {collection, getDocs } from "firebase/firestore";
+import {collection, getDocs, addDoc,setDoc} from "firebase/firestore";
 import { db } from "../Config/firebaseConfig";
 import { productEntity } from "../lib/ProductEntity";
 
@@ -20,6 +20,17 @@ export const getAllProducts = async () => {
     }
 };
         
+export const addProducts = async () =>{
+    try {
+
+        const docRef = await addDoc(collection(db, "Products"), {
+            name: "Tokyo",
+            country: "Japan"
+          });
+    } catch (error) {
+        
+    }
+}
 
 
 
