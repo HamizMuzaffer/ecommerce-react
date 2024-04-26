@@ -1,5 +1,5 @@
 import React from 'react'
-import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route, } from 'react-router-dom'
 import Layout from '../Layout'
 import Home from '../Pages/Home'
 import AddProduct from '../Pages/AddProduct'
