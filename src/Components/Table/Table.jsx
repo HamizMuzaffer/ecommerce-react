@@ -4,7 +4,6 @@ import { deleteProduct } from '../../Services/ProductServices';
 // Handle Delete Function on Click
 const handleDelete = (id) => {
     deleteProduct(id);
-    window.location.reload()
 }
 
 function Table(props) {

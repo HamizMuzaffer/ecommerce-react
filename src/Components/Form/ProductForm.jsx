@@ -16,9 +16,8 @@ export default function ProductForm() {
          console.log(data)
          reset()
           alert('Product added successfully')
-          const navigateTo = useNavigate();
-          navigateTo("")
-      } catch (error) {
+          window.location.href = "http://localhost:5173/";
+        } catch (error) {
         console.error(error)
       }
       
