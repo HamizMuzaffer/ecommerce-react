@@ -1,6 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { addProduct } from '../../Services/ProductServices';
+
 export default function ProductForm() {
     const {
         register,
@@ -10,11 +11,17 @@ export default function ProductForm() {
     } = useForm();
     
     const onSubmit = async (data) => {
+      try {
+        await addProduct(data)
+         console.log(data)
+         reset()
+          alert('Product added successfully')
+          const navigateTo = useNavigate();
+          navigateTo("")
+      } catch (error) {
+        console.error(error)
+      }
       
-       addProduct(data)
-      console.log(data)
-      reset()
-      alert('Product added successfully')
     }
     
   return (
@@ -69,11 +76,11 @@ export default function ProductForm() {
                   </div>
                   <p className="text-xs text-white">
                     PNG, JPG, GIF up to 10MB
-                  </p>
-                </div>
+                  </p> </div>
               </div>
             </div>
           </div>
+                
 
           <div className="flex justify-end mt-6">
             <button type='submit' className="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-blue-950 rounded-md hover:bg-pink-700 focus:outline-none focus:bg-gray-600">Post</button>

@@ -3,8 +3,8 @@ import React from 'react'
 function Footer() {
   return (
 <>
-<footer className="bg-white dark:bg-gray-900 mt-20">
-    <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+<footer className=" bg-white dark:bg-gray-900">
+    <div className=" mt-44 mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
               <a className="flex items-center">

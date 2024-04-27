@@ -1,19 +1,19 @@
-import {collection, getDocs, addDoc,setDoc} from "firebase/firestore";
+import {collection, getDocs, addDoc,doc,deleteDoc} from "firebase/firestore";
 import { db } from "../Config/firebaseConfig";
 import { storage } from "../Config/firebaseConfig";
-import {ref,uploadBytes,getDownloadURL} from 'firebase/storage';
+import {ref,uploadBytes,getDownloadURL,} from 'firebase/storage';
 
+// Get Product From Firebase
 export const getAllProducts = async () => {
     try {
         const querySnapshot = await getDocs(collection(db, 'Products'));
 
         const productsData = querySnapshot.docs.map(doc => {
             return {
-                id: doc.id, // Add document ID to the product data
-                ...doc.data() // Spread the rest of the document data
+                id: doc.id, 
+                ...doc.data() 
             };
         });
-        console.log(productsData,productsData.id);
         return productsData;
 
     } catch (error) {
@@ -21,17 +21,14 @@ export const getAllProducts = async () => {
     }
 };
 
-
+// Add Product Function
 export const addProduct = async (data) => { 
-    const file = data.ProductIMG[0]; // Get the uploaded file
+    const file = data.ProductIMG[0]; 
     
     try {
         const storageRef = ref(storage, `productImages/${file.name}`);
         const snapshot = await uploadBytes(storageRef, file);
         const imageUrl = await getDownloadURL(snapshot.ref);
-        console.log("Image URL:", imageUrl);
-
-        // Add product data to Firestore
         const docRef = await addDoc(collection(db, "Products"), {
             ProductIMG: imageUrl,
             Name: data.Name,
@@ -40,9 +37,21 @@ export const addProduct = async (data) => {
             Description: data.Description
         });
         console.log("Document written with ID: ", docRef.id);
-    } catch (error) {
+   } catch (error) {
         console.error("Error adding document: ", error);
     }
 };
 
+// Delete Product Function 
+export const deleteProduct = async (id) => {
+    const docRef = doc(db, "Products", id);
+    await deleteDoc(docRef)
+     .then(() => {
 
+        console.log("Document successfully deleted!");
+        window.location.reload();
+      })
+     .catch((error) => {
+        console.error("Error removing document: ", error);
+      });
+    }

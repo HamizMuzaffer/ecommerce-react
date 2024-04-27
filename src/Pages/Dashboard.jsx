@@ -1,31 +1,56 @@
 import React from 'react'
 import { doc, getDoc } from 'firebase/firestore';
 import { useState,useEffect } from 'react';
-import { Link } from 'react-router-dom';
-function Dashboard() {
-    const [product, setProduct] = useState(null);
-    useEffect(() => {
-        const fetchProduct = async () => {
-          try {
-            const docRef = doc(db, 'Products', productId.id);
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-              setProduct({ id: docSnap.id, ...docSnap.data() });
-            } else {
-              console.log('No such document!');
-            }
-          } catch (error) {
-            console.error('Error fetching document: ', error);
-          }
-        };
+import { getAllProducts } from '../Services/ProductServices'
 
-        fetchProduct();},[])
+import Table from '../Components/Table/Table';
+
+function Dashboard() {
+  
+    const [products, setProducts] = useState(null);
+    useEffect(()=>{
+      (async()=>{
+      const productsResponse = await getAllProducts()
+      setProducts(productsResponse)
+      console.log(products)
+     })()
+    },[])
+
+    if (!products) return console.log(null) 
+
   return (
-    <><div className='my-44 flex'>
-    {
-}
-    </div>
-    </>
+  <>
+  <div className='flex justify-center items-center mt-48 w-full'>
+<div className=' flex justify-center items-center'>
+ <table class=" w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"/>
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Product name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Qty
+                </th>
+                
+                <th scope="col" class="px-6 py-3">
+                    Price
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Delete
+                </th>
+            </tr>
+            {
+       products.map((product,idx)=>{
+     return <Table {...product} />
+       })
+            }
+        </thead>
+  <table/>
+    
+  </div>
+  </div>
+</>
+  
   )
 
 }
