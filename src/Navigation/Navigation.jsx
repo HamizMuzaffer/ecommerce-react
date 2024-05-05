@@ -24,6 +24,7 @@ function Navigation() {
 <>
 <RouterProvider router={router}/>
 </>
+
 )
 }
 
